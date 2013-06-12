@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+    <head>
+        <title>DICOM Reviewer</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/css/review.css">
+        <script src="{{STATIC_URL}}scripts/javascript/min/jquery.js" type="text/javascript" charset="utf-8"></script>
+        <script src="{{STATIC_URL}}scripts/javascript/min/json2.js" type="text/javascript" charset="utf-8"></script>
+        <script src="{{STATIC_URL}}scripts/javascript/min/raphael.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+
+    <body>
+        <noscript>
+            <span class="message error">JavaScript must be enabled. Turn it on and refresh the page.</span>
+        </noscript>
+        {% if saved %}
+        <p id="saved"> {{ saved }} Study reviews saved, thanks! </p>
+        {% endif %}
+        <p class="notice">Welcome {{user.first_name}}, please review the following studies:</p>
+
+        <form method="post" onsubmit="return sendReviews();">{% csrf_token %}
+            <table>
+                <thead>
+                    <tr><th>ID</th>
+                        <th>Link to Study</th>
+                        <th>Reviewed?</th>
+                        <th>Burnt-In PHI?</th>
+                        <th>Facial Reconstruction?</th>
+                        <th>Protocol Series?</th>
+                        <th>Relevant to AudGendDB?</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+            <tbody>
+                {% for study in studies %}
+                <tr>
+                    <td><div class="database_id">{{study.id}}</div></td>
+                    <td><a href="dicom/?studyUID={{study.original_study_uid}}&instances=true" target="_blank">View study {{study.accession_no}} from {{study.study_date.year}}</a></td>
+                    <td><input style="margin:20px 0px 20px 0px;" name="reviewed" type="checkbox"/></td>
+                    <td><select name="phi">
+                           <option value="unknown" selected="selected">Unknown</option>
+                           <option value="yes">Yes</option>
+                           <option value="no">No</option>
+                    </select></td>
+                    <td><input name="reconstruction" type="checkbox"/></td>
+                    <td><input name="protocol" type="checkbox"/></td>
+                    <td><input name="relevant" type="checkbox"/></td>
+                    <td><textarea name="comment" rows="2" cols="30"></textarea></td>
+                </tr>
+                {% endfor %}
+                <tr><td/><td/><td/><td/><td/><td/><td></td><td><input
+                                                style="float:right"
+                                                type="submit" value="Save"/></td></tr>
+            </tbody>
+        </table>
+    </form>
+    <p id="response" style="display:none;"></p>
+    <div id="current" style="display:none;margin:10px 0px 0px 0px;"></div>
+    <script type="text/javascript" charset="utf-8">
+         $(document).ajaxSend(function(event, xhr, settings) {
+                 xhr.setRequestHeader("X-CSRFToken", $('[name="csrfmiddlewaretoken"]').val());
+         });
+         var star = "M30.373,12.329H19.391l-3.39-10.433l-0.476,1.458l-2.918,8.977L1.628,12.329l8.882,6.454l-3.396,10.44l8.884-6.454l8.886,6.457l-3.397-10.443L30.373,12.329zM17.175,21.151L16,20.298l-1.175,0.854l-3.902,2.834l1.49-4.584l0.45-1.382l-1.177-0.855l-3.9-2.834h6.275l0.45-1.381L16,8.366l1.489,4.581l0.449,1.381h6.281l-3.906,2.836l-1.178,0.854l0.449,1.384l1.493,4.584L17.175,21.151z";
+         var paper = Raphael(document.getElementById("current"), 30,30);
+         paper.path(star).attr({fill:"#34afed", stroke: "none"});
+         $('a').click(function(){
+                 $(this).parent().next().append($("#current").css("display","block").css("float","right"));
+         });
+
+         var null_bool_map = {
+             yes: true,
+             no: false,
+             unknown:null
+         };
+         var payload;
+         var sendReviews = function(){
+             payload = [];
+             $("table tr").each(function(){
+                     if (!$('[name="reviewed"]', this).is(":checked")) return;
+                     payload.push({
+                          study:parseInt($(".database_id", this).text()),
+                          has_reconstruction:$('[name="reconstruction"]',this).is(":checked"),
+                          has_protocol_series:$('[name="protocol"]',this).is(":checked"),
+                          relevant:$('[name="relevant"]',this).is(":checked"),
+                          has_phi:null_bool_map[$('[name="phi"]',this).val()],
+                          comment:$('[name="comment"]',this).val()
+                     });
+             });
+             $.ajax({
+                 url:window.location.href,
+                 type:"POST",
+                 data:JSON.stringify(payload),
+                 contentType:"application/json",
+                 success: function(data){
+                 $("#response").addClass('notice').text(data.saved + " reviews saved. Thanks!").fadeIn("fast");
+                    setTimeout(function(){ window.location.href = window.location.href;}, 2000);
+                 },
+                 error: function(){
+                     $("#response").text("An error occurred").fadeIn("fast");
+                 }
+             });
+             return false;
+         };
+     </script>
+ </body>
+</html>
+

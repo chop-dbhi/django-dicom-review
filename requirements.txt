@@ -1,0 +1,14 @@
+# This file collects all required third-party applications that are needed
+# to run this project. Later you can install all these apps in a row
+# using pip. Example::
+#
+#     pip install -U -r requirements.txt
+
+# Core requirements
+django>=1.4
+git+http://github.com/cbmi/django-dicom-models.git
+
+# Database Drivers, the Python stdlib has support for SQLite
+# psycopg2
+# cx_oracle
+# mysql-python
