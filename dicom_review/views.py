@@ -48,7 +48,15 @@ def studies_page(request, prev_saved):
          studies.append(study['id'])
     studies = RadiologyStudy.objects.filter(id__in=studies)
 
+    high_risk = False
+    for study in studies:
+        if study.high_risk_flag:
+            high_risk = True
+            break
+
     return render_to_response("index.html", {
+        'high_risk': high_risk,
+        'always_show_high_risk': settings.ALWAYS_SHOW_HIGH_RISK,
         'studies':studies,
         'saved':prev_saved,
         'project_name': settings.DICOM_PROJECT_NAME,

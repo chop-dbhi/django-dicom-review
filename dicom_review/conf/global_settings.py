@@ -264,5 +264,9 @@ STUDYCENTRIC_LINK = "/studycentric/"
 # Maximum number of reviewers to review each study
 MAX_REVIEWERS = 1
 
+# Whether or not to show the high risk column on the review page
+# even if none of the dislayed reviews are flagged
+ALWAYS_SHOW_HIGH_RISK = False
+
 # The primary key of the ``Site`` object for the Sites Framework
 SITE_ID = 1

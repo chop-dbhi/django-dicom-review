@@ -9,6 +9,9 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr><th>ID</th>
+                    {% if high_risk or always_show_high_risk %}
+                        <th>Flagged as High Risk?</th>
+                    {% endif %}
                         <th>Link to Study</th>
                         <th>Reviewed?</th>
                         <th>Burnt-In PHI?</th>
@@ -22,6 +25,23 @@
                 {% for study in studies %}
                 <tr>
                     <td><div class="database_id">{{study.id}}</div></td>
+                    {% if high_risk or always_show_high_risk %}
+                    <td>
+                        {% if study.high_risk_flag %}
+                            <div class="alert alert-error">
+                                {% if study.high_risk_message %}
+                                <i class=icon-fire></i>{{ study.high_risk_message }}
+                                {% else %}
+                                <i class=icon-fire></i>Flagged as high risk for PHI
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-success">
+                                <i class=icon-thumbs-up></i>Not flaggged
+                            </div>
+                        {% endif %}
+                    </td>
+                    {% endif %}
                     <td><a href="{{ studycentric_link }}?studyUID={{study.original_study_uid}}&instances=true" target="_blank">View study {{ study.accession_no }} from {{study.study_date.year}}</a></td>
                     <td><input style="margin:20px 0px 20px 0px;" name="reviewed" type="checkbox"/></td>
                     <td><select name="phi">
@@ -35,7 +55,7 @@
                     <td><textarea name="comment" rows="2" cols="30"></textarea></td>
                 </tr>
                 {% endfor %}
-                <tr><td/><td/><td/><td/><td/><td/><td></td><td><input style="float:right" class="btn btn-success" type="submit" value="Save reviewed studies"/></td></tr>
+                <tr><td/><td/>{%if high_risk or always_show_high_risk %}<td/>{% endif %}<td/><td/><td/><td/><td></td><td><input style="float:right" class="btn btn-success" type="submit" value="Save reviewed studies"/></td></tr>
             </tbody>
         </table>
     </form>
