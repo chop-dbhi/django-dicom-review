@@ -43,7 +43,7 @@
                     </td>
                     {% endif %}
                     <td><a href="{{ studycentric_link }}?studyUID={{study.original_study_uid}}&instances=true" target="_blank">View study {{ study.accession_no }} from {{study.study_date.year}}</a></td>
-                    <td><input style="margin:20px 0px 20px 0px;" name="reviewed" type="checkbox"/></td>
+                    <td><input class="reviewed" style="margin:20px 0px 20px 0px;" name="reviewed" type="checkbox"/></td>
                     <td><select name="phi">
                            <option value="unknown" selected="selected">Unknown</option>
                            <option value="yes">Yes</option>
@@ -59,15 +59,34 @@
             </tbody>
         </table>
     </form>
+    <div class="alert alert-warn" id="warn" style="display:none;"></div>
     <div class=alert id="response" style="display:none;"></div>
     <script type="text/javascript" charset="utf-8">
          $(document).ajaxSend(function(event, xhr, settings) {
                  xhr.setRequestHeader("X-CSRFToken", $('[name="csrfmiddlewaretoken"]').val());
          });
 
+         {% if warn_unviewed %}
+         $('input.reviewed').popover({
+             content: "<i class=icon-bell></i>This study has not yet been viewed.",
+             html:true,
+             trigger: "manual"
+         });
+         $('table').on('change', 'input.reviewed', function(){
+             var that = this;
+              if (!$(this).is(":checked"))
+                  return;
+              if ($(this).parent().parent().find('a').is(".clicked"))
+                  return;
+              $(this).popover("show");
+              setTimeout(function(){$(that).popover('hide');}, 3000);
+         });
+         {% endif %}
+
          $('a').click(function(){
-                 $('tr').removeClass("error");
-                 $(this).parent().parent().addClass("error");
+                 $('tr').removeClass("success");
+                 $(this).parent().parent().addClass("success");
+                 $(this).addClass("clicked");
          });
 
          var null_bool_map = {

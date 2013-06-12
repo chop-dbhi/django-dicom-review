@@ -57,6 +57,7 @@ def studies_page(request, prev_saved):
     return render_to_response("index.html", {
         'high_risk': high_risk,
         'always_show_high_risk': settings.ALWAYS_SHOW_HIGH_RISK,
+        'warn_unviewed': settings.WARN_UNVIEWED,
         'studies':studies,
         'saved':prev_saved,
         'project_name': settings.DICOM_PROJECT_NAME,

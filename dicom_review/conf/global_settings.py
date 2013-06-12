@@ -271,5 +271,8 @@ ALWAYS_SHOW_HIGH_RISK = False
 # Maximum number of studies to show reviewers at once
 MAX_STUDIES_PER_PAGE = 10
 
+# Show a warning if user reviews a study they have not viewed
+WARN_UNVIEWED = True
+
 # The primary key of the ``Site`` object for the Sites Framework
 SITE_ID = 1
