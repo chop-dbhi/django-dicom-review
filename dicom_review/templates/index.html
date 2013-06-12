@@ -83,7 +83,7 @@
          });
          {% endif %}
 
-         $('a').click(function(){
+         $('a').mousedown(function(){
                  $('tr').removeClass("success");
                  $(this).parent().parent().addClass("success");
                  $(this).addClass("clicked");
