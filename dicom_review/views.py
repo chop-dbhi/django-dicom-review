@@ -10,13 +10,14 @@ from django.conf import settings
 from django.template import RequestContext
 from django.forms import ModelForm
 from django.views.decorators.cache import never_cache
+from django.contrib.auth.decorators import login_required
 MAX_REVIEWERS = 1 # Maximum number of reviewers per study
 
 # Create the form class.
 class ReviewForm(ModelForm):
     class Meta:
         model = StudyReview
-
+@login_required
 @never_cache
 def review(request):
     saved = 0 
@@ -32,6 +33,9 @@ def review(request):
     else:
         return studies_page(request, saved)
 
+
+
+@login_required
 def studies_page(request, prev_saved):
     studies = []
     candidate_studies = RadiologyStudy.objects.filter(exclude=False, image_published=False, original_study_uid__isnull=False)
@@ -42,10 +46,12 @@ def studies_page(request, prev_saved):
            .exclude(radiologystudyreview__user_id=request.user.id).order_by("?")[:1]
        for study in this_year:
          studies.append(study['id'])
-
     studies = RadiologyStudy.objects.filter(id__in=studies)
 
     return render_to_response("index.html", {
-        'studies':studies, 'saved':prev_saved
+        'studies':studies, 
+        'saved':prev_saved,
+        'project_name': settings.DICOM_PROJECT_NAME,
+        'studycentric_link': settings.STUDYCENTRIC_LINK
     }, RequestContext(request))
 

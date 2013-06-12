@@ -1,92 +1,152 @@
 [
-   {
-     "original_study_uid": "1.2.3.4.5.1",
-     "requested": true,
-     "exclude": false,
-     "image_published": false,
-     "pub_date": none,
-     "study_date": "2003-06-12 10:38:51.762230",
-     "accession_no": "1"
+   { 
+     "model": "staging.radiologystudy",
+     "pk": 1,
+     "fields": {
+          "original_study_uid": "1.2.3.4.5.1",
+          "requested": true,
+          "exclude": false,
+          "image_published": false,
+          "pub_date": null,
+          "study_date": "2003-06-12 10:38:51.762230",
+          "created": "2013-06-12 10:38:51.762230",
+          "modified": "2013-06-12 10:38:51.762230",
+          "accession_no": "1"
+        }
    },
    {
-     "original_study_uid": "1.2.3.4.5.2",
-     "requested": True,
-     "exclude": False,
-     "image_published": False,
-     "pub_date": None,
-     "study_date": "2004-06-12 10:38:51.762230",
-     "accession_no": "2"
+     "model": "staging.radiologystudy",
+     "pk": 2,
+     "fields": {
+          "original_study_uid": "1.2.3.4.5.2",
+          "requested": true,
+          "exclude": false,
+          "image_published": false,
+          "pub_date": null,
+          "study_date": "2004-06-12 10:38:51.762230",
+          "created": "2013-06-12 10:38:51.762230",
+          "modified": "2013-06-12 10:38:51.762230",
+          "accession_no": "2"
+        }
    },
    {
-     "original_study_uid": "1.2.3.4.5.3",
-     "requested": true,
-     "exclude": false,
-     "image_published": false,
-     "pub_date": none,
-     "study_date": "2005-06-12 10:38:51.762230",
-     "accession_no": "3"
+     "model": "staging.radiologystudy",
+     "pk": 3,
+     "fields": {
+          "original_study_uid": "1.2.3.4.5.3",
+          "requested": true,
+          "exclude": false,
+          "image_published": false,
+          "pub_date": null,
+          "study_date": "2005-06-12 10:38:51.762230",
+          "created": "2013-06-12 10:38:51.762230",
+          "modified": "2013-06-12 10:38:51.762230",
+          "accession_no": "3"
+        }
+   },
+   { 
+     "model": "staging.radiologystudy",
+     "pk": 4,
+     "fields": {
+          "original_study_uid": "1.2.3.4.5.4",
+          "requested": true,
+          "exclude": false,
+          "image_published": false,
+          "pub_date": null,
+          "study_date": "2006-06-12 10:38:51.762230",
+          "created": "2013-06-12 10:38:51.762230",
+          "modified": "2013-06-12 10:38:51.762230",
+          "accession_no": "4"
+        }
    },
    {
-     "original_study_uid": "1.2.3.4.5.4",
-     "requested": True,
-     "exclude": False,
-     "image_published": False,
-     "pub_date": None,
-     "study_date": "2006-06-12 10:38:51.762230",
-     "accession_no": "4"
+     "model": "staging.radiologystudy",
+     "pk": 5,
+     "fields": {
+          "original_study_uid": "1.2.3.4.5.5",
+          "requested": true,
+          "exclude": false,
+          "image_published": false,
+          "pub_date": null,
+          "study_date": "2007-06-12 10:38:51.762230",
+          "created": "2013-06-12 10:38:51.762230",
+          "modified": "2013-06-12 10:38:51.762230",
+          "accession_no": "5"
+        }
    },
    {
-     "original_study_uid": "1.2.3.4.5.5",
-     "requested": true,
-     "exclude": false,
-     "image_published": false,
-     "pub_date": none,
-     "study_date": "2007-06-12 10:38:51.762230",
-     "accession_no": "5"
+     "model": "staging.radiologystudy",
+     "pk": 6,
+     "fields": {
+          "original_study_uid": "1.2.3.4.5.6",
+          "requested": true,
+          "exclude": false,
+          "image_published": false,
+          "pub_date": null,
+          "created": "2013-06-12 10:38:51.762230",
+          "study_date": "2008-06-12 10:38:51.762230",
+          "modified": "2013-06-12 10:38:51.762230",
+          "accession_no": "6"
+        }
    },
    {
-     "original_study_uid": "1.2.3.4.5.6",
-     "requested": True,
-     "exclude": False,
-     "image_published": False,
-     "pub_date": None,
-     "study_date": "2008-06-12 10:38:51.762230",
-     "accession_no": "6"
+     "model": "staging.radiologystudy",
+     "pk": 7,
+     "fields": {
+          "original_study_uid": "1.2.3.4.5.7",
+          "requested": true,
+          "exclude": false,
+          "image_published": false,
+          "pub_date": null,
+          "created": "2013-06-12 10:38:51.762230",
+          "study_date": "2009-06-12 10:38:51.762230",
+          "modified": "2013-06-12 10:38:51.762230",
+          "accession_no": "7"
+        }
    },
    {
-     "original_study_uid": "1.2.3.4.5.7",
-     "requested": true,
-     "exclude": false,
-     "image_published": false,
-     "pub_date": none,
-     "study_date": "2009-06-12 10:38:51.762230",
-     "accession_no": "7"
+     "model": "staging.radiologystudy",
+     "pk": 8,
+     "fields": {
+          "original_study_uid": "1.2.3.4.5.8",
+          "requested": true,
+          "exclude": false,
+          "image_published": false,
+          "pub_date": null,
+          "study_date": "2010-06-12 10:38:51.762230",
+          "created": "2013-06-12 10:38:51.762230",
+          "modified": "2013-06-12 10:38:51.762230",
+          "accession_no": "8"
+        }
    },
    {
-     "original_study_uid": "1.2.3.4.5.8",
-     "requested": True,
-     "exclude": False,
-     "image_published": False,
-     "pub_date": None,
-     "study_date": "2010-06-12 10:38:51.762230",
-     "accession_no": "8"
+     "model": "staging.radiologystudy",
+     "pk": 9,
+     "fields": {
+          "original_study_uid": "1.2.3.4.5.9",
+          "requested": true,
+          "exclude": false,
+          "image_published": false,
+          "pub_date": null,
+          "study_date": "2011-06-12 10:38:51.762230",
+          "created": "2013-06-12 10:38:51.762230",
+          "modified": "2013-06-12 10:38:51.762230",
+          "accession_no": "9"
+        }
    },
    {
-     "original_study_uid": "1.2.3.4.5.9",
-     "requested": true,
-     "exclude": false,
-     "image_published": false,
-     "pub_date": none,
-     "study_date": "2011-06-12 10:38:51.762230",
-     "accession_no": "9"
-   },
-   {
-     "original_study_uid": "1.2.3.4.5.10",
-     "requested": True,
-     "exclude": False,
-     "image_published": False,
-     "pub_date": None,
-     "study_date": "2012-06-12 10:38:51.762230",
-     "accession_no": "10"
-   },
+     "model": "staging.radiologystudy",
+     "pk": 10,
+     "fields": {
+          "original_study_uid": "1.2.3.4.5.10",
+          "requested": true,
+          "exclude": false,
+          "image_published": false,
+          "pub_date": null,
+          "study_date": "2012-06-12 10:38:51.762230",
+          "created": "2013-06-12 10:38:51.762230",
+          "modified": "2013-06-12 10:38:51.762230",
+          "accession_no": "10"
+        }
+    }
 ]

@@ -27,7 +27,6 @@ INSTALLED_APPS = (
     'dicom_models.staging',
 )
 
-
 #
 # ADMINISTRATIVE
 #
@@ -149,8 +148,9 @@ FORCE_SCRIPT_NAME = ''
 
 ROOT_URLCONF = 'dicom_review.conf.urls'
 
-# LOGIN_URL = '/login/'
-# LOGOUT_URL = '/logout/'
+LOGIN_URL = FORCE_SCRIPT_NAME + '/login/'
+
+LOGOUT_URL = FORCE_SCRIPT_NAME + '/logout/'
 
 #
 # MIDDLEWARE
@@ -253,6 +253,13 @@ IGNORABLE_404_PATHS = (
 #
 # VARIOUS APP SETTINGS
 #
+# DICOM REVIEW
+# Name of project DICOM images are being reviewed for
+# Used in templates for display
+DICOM_PROJECT_NAME = "project"
+# link to StudyCentric DICOM image viewer application
+# Used to provide link within reviewer to view the study
+STUDYCENTRIC_LINK = "/studycentric/"
 
 # The primary key of the ``Site`` object for the Sites Framework
 SITE_ID = 1

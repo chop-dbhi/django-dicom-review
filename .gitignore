@@ -6,6 +6,7 @@
 *.egg-info
 *.egg
 *.sock
+*.db
 dist
 sdist
 build

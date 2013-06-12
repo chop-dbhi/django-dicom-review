@@ -9,7 +9,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', review),
-
+    url(r'^login/$', 'django.contrib.auth.views.login', name="login"),
     # Administrative components
     url(r'^admin/', include(admin.site.urls)),
 )
