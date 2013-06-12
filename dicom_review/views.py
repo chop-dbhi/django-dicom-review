@@ -11,9 +11,11 @@ from django.template import RequestContext
 from django.forms import ModelForm
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
-MAX_REVIEWERS = 1 # Maximum number of reviewers per study
 
-# Create the form class.
+MAX_REVIEWERS = settings.MAX_REVIEWERS
+
+# Create the form class
+
 class ReviewForm(ModelForm):
     class Meta:
         model = StudyReview
@@ -32,8 +34,6 @@ def review(request):
         return HttpResponse('{"saved":%d}' % saved, content_type = "application/json")
     else:
         return studies_page(request, saved)
-
-
 
 @login_required
 def studies_page(request, prev_saved):

@@ -261,5 +261,8 @@ DICOM_PROJECT_NAME = "project"
 # Used to provide link within reviewer to view the study
 STUDYCENTRIC_LINK = "/studycentric/"
 
+# Maximum number of reviewers to review each study
+MAX_REVIEWERS = 1
+
 # The primary key of the ``Site`` object for the Sites Framework
 SITE_ID = 1

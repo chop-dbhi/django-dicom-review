@@ -5,7 +5,7 @@
 #     pip install -U -r requirements.txt
 
 # Core requirements
-django>=1.4
+django>=1.5
 git+http://github.com/cbmi/django-dicom-models.git
 
 # Database Drivers, the Python stdlib has support for SQLite
