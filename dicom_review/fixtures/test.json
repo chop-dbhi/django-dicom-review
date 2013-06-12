@@ -1,5 +1,5 @@
 [
-   { 
+   {
      "model": "staging.radiologystudy",
      "pk": 1,
      "fields": {
@@ -44,7 +44,7 @@
           "accession_no": "3"
         }
    },
-   { 
+   {
      "model": "staging.radiologystudy",
      "pk": 4,
      "fields": {

@@ -49,7 +49,7 @@ def studies_page(request, prev_saved):
     studies = RadiologyStudy.objects.filter(id__in=studies)
 
     return render_to_response("index.html", {
-        'studies':studies, 
+        'studies':studies,
         'saved':prev_saved,
         'project_name': settings.DICOM_PROJECT_NAME,
         'studycentric_link': settings.STUDYCENTRIC_LINK
