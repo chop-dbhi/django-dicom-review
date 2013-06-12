@@ -268,5 +268,8 @@ MAX_REVIEWERS = 1
 # even if none of the dislayed reviews are flagged
 ALWAYS_SHOW_HIGH_RISK = False
 
+# Maximum number of studies to show reviewers at once
+MAX_STUDIES_PER_PAGE = 10
+
 # The primary key of the ``Site`` object for the Sites Framework
 SITE_ID = 1

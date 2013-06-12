@@ -46,7 +46,7 @@ def studies_page(request, prev_saved):
            .exclude(radiologystudyreview__user_id=request.user.id).order_by("?")[:1]
        for study in this_year:
          studies.append(study['id'])
-    studies = RadiologyStudy.objects.filter(id__in=studies)
+    studies = RadiologyStudy.objects.filter(id__in=studies)[:settings.MAX_STUDIES_PER_PAGE]
 
     high_risk = False
     for study in studies:
