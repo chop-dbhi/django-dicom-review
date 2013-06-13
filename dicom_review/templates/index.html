@@ -13,12 +13,13 @@
                     {% if high_risk or always_show_high_risk %}
                         <th>Flagged as High Risk?</th>
                     {% endif %}
-                        <th>Link to Study</th>
+                        <th>Study Link</th>
                         <th>Reviewed?</th>
                         <th>Burnt-In PHI?</th>
                         <th>Facial Reconstruction?</th>
                         <th>Protocol Series?</th>
                         <th>Relevant to {{ project_name }}?</th>
+                        <th>Exclude for other reason? Please comment.</th>
                         <th>Comment</th>
                     </tr>
                 </thead>
@@ -53,10 +54,11 @@
                     <td><input name="reconstruction" type="checkbox"/></td>
                     <td><input name="protocol" type="checkbox"/></td>
                     <td><input name="relevant" type="checkbox"/></td>
+                    <td><input name="exclude" type="checkbox"/></td>
                     <td><textarea name="comment" rows="2" cols="30"></textarea></td>
                 </tr>
                 {% endfor %}
-                <tr><td/><td/>{%if high_risk or always_show_high_risk %}<td/>{% endif %}<td/><td/><td/><td/><td></td><td><input style="float:right" class="btn btn-success" type="submit" value="Save reviewed studies"/></td></tr>
+                <tr><td/><td/>{%if high_risk or always_show_high_risk %}<td/>{% endif %}<td/><td/><td/><td/><td/><td></td><td><input style="float:right" class="btn btn-success" type="submit" value="Save reviewed studies"/></td></tr>
             </tbody>
         </table>
     </form>
@@ -68,8 +70,9 @@
 
          {% if warn_unviewed %}
          $('input.reviewed').popover({
-             content: "<i class=icon-bell></i>This study has not yet been viewed.",
-             html:true,
+             content:  "<i class=icon-bell></i>This study has not yet been viewed.",
+             html: true,
+             placement: "bottom",
              trigger: "manual"
          });
          $('table').on('change', 'input.reviewed', function(){
@@ -83,11 +86,23 @@
          });
          {% endif %}
 
-         $('a').mousedown(function(){
+         // takes care of licks and enter
+         $('a').click(function(){
                  $('tr').removeClass("success");
                  $(this).parent().parent().addClass("success");
                  $(this).addClass("clicked");
          });
+
+         // Don't bother the user if they have right clicked on the link
+         // We will assume the have either copied the link or opened in a new
+         // window/tab
+         $('a').mousedown(function(event){
+             if (event.which === 3){
+                 $('tr').removeClass("success");
+                 $(this).parent().parent().addClass("success");
+                 $(this).addClass("clicked");
+             }
+         }):
 
          var null_bool_map = {
              yes: true,
@@ -106,6 +121,7 @@
                           has_protocol_series:$('[name="protocol"]',this).is(":checked"),
                           relevant:$('[name="relevant"]',this).is(":checked"),
                           has_phi:null_bool_map[$('[name="phi"]',this).val()],
+                          exclude:$('[name="exclude"]',this).val()
                           comment:$('[name="comment"]',this).val()
                      });
              });
