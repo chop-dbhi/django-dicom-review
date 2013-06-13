@@ -14,8 +14,20 @@ from django.contrib.auth.decorators import login_required
 
 MAX_REVIEWERS = settings.MAX_REVIEWERS
 
-# Create the form class
+# Default priority function
+# Takes allows 1 study per year in the range of years across all
+# studies in the database
+def one_per_year(candidate_studies):
+    years = candidate_studies.dates('study_date', 'year')
+    for period in years:
+       this_year = candidate_studies.values('id').annotate(num_reviews=Count("radiologystudyreview"))\
+           .filter(study_date__year=period.year, num_reviews__lt=MAX_REVIEWERS)\
+           .exclude(radiologystudyreview__user_id=request.user.id).order_by("?")[:1]
+       for study in this_year:
+         studies.append(study['id'])
+    return studies
 
+# Create the form class
 class ReviewForm(ModelForm):
     class Meta:
         model = StudyReview
@@ -38,14 +50,19 @@ def review(request):
 @login_required
 def studies_page(request, prev_saved):
     studies = []
+    # Here we determine studies that are eligible for review
     candidate_studies = RadiologyStudy.objects.filter(exclude=False, image_published=False, original_study_uid__isnull=False)
-    years = candidate_studies.dates('study_date', 'year')
-    for period in years:
-       this_year = candidate_studies.values('id').annotate(num_reviews=Count("radiologystudyreview"))\
-           .filter(study_date__year=period.year, num_reviews__lt=MAX_REVIEWERS)\
-           .exclude(radiologystudyreview__user_id=request.user.id).order_by("?")[:1]
-       for study in this_year:
-         studies.append(study['id'])
+    # We must decide what method to use for choosing the reviews displayed to the user
+    # First we check to see if the user object has a priority method defined
+    # If it does we use that one.
+    # Otherwise, there will be a site wide default algorithm, and by default this will be set to one_per_year
+    # One of the provided methods will be the list method, which allows the administrator to configure a list per user that the
+    # studies to review will be pulled from
+    # Whether the list method is the global default or set on the user object explicitly does not matter. The workflow will be same
+    # Check to see if the user object has an associated list object if so use that one
+    # If not check to see if there is a global list object setup, if so use that one
+    # Otherwise just pull from the candidate_studies
+    studies = one_per_year(candidate_studies)
     studies = RadiologyStudy.objects.filter(id__in=studies)[:settings.MAX_STUDIES_PER_PAGE]
 
     high_risk = False

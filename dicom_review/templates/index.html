@@ -102,7 +102,7 @@
                  $(this).parent().parent().addClass("success");
                  $(this).addClass("clicked");
              }
-         }):
+         });
 
          var null_bool_map = {
              yes: true,
@@ -121,7 +121,7 @@
                           has_protocol_series:$('[name="protocol"]',this).is(":checked"),
                           relevant:$('[name="relevant"]',this).is(":checked"),
                           has_phi:null_bool_map[$('[name="phi"]',this).val()],
-                          exclude:$('[name="exclude"]',this).val()
+                          exclude:$('[name="exclude"]',this).is(":checked"),
                           comment:$('[name="comment"]',this).val()
                      });
              });
