@@ -4,9 +4,6 @@ from dicom_models.staging.models import RadiologyStudy
 from prioritizers import registry as prioritizers
 from solo.models import SingletonModel
 
-class Prioritizer(models.Model):
-    pass
-
 class StudyList(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     studies = models.ManyToManyField(RadiologyStudy)

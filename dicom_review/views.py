@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 from prioritizers import registry as prioritizers
 
 MAX_REVIEWERS = settings.MAX_REVIEWERS
-config = Config.objects.get(pk=1)
+config = Config.get_solo()
 
 # Default priority function
 # Takes allows 1 study per year in the range of years across all
@@ -43,22 +43,25 @@ def review(request):
 
 @login_required
 def studies_page(request, prev_saved):
+    reviewer = request.user
     # Here we determine studies that are eligible for review
     candidate_studies = RadiologyStudy.objects.filter(exclude=False, image_published=False, original_study_uid__isnull=False)
     # We must decide what method to use for choosing the reviews displayed to the user
     # First we check to see if the user object has a priority method defined
     # If it does we use that one.
     # Otherwise, there will be a site wide default algorithm, and by default this will be set to one_per_year
-    # One of the provided methods will be the list method, which allows the administrator to configure a list per user that the
-    # studies to review will be pulled from
-    # Whether the list method is the global default or set on the user object explicitly does not matter. The workflow will be same
-    # Check to see if the user object has an associated list object if so use that one
-    # If not check to see if there is a global list object setup, if so use that one
-    # Otherwise just pull from the candidate_studies
 
+    if reviewer.prioritizer:
+        prioritizer_name = reviewer.prioritizer
+    elif config.default_prioritizer:
+        prioritizer_name = config.default_prioritizer
+    else:
+        prioritizer_name = 'default'
 
-    studies = prioritizers.get(config.default_prioritizer)(candidate_studies, request.user)
-    studies = RadiologyStudy.objects.filter(id__in=studies)[:settings.MAX_STUDIES_PER_PAGE]
+    prioritizer = prioritizers.get(prioritizer_name)
+
+    studies = prioritizer(candidate_studies, request.user, annotation_class=StudyReview)
+    studies = studies[:settings.MAX_STUDIES_PER_PAGE]
 
     high_risk = False
     for study in studies:

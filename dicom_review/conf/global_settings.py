@@ -214,21 +214,21 @@ LOGGING = {
 #
 
 # For production environments, the memcached backend is highly recommended
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique',
-        'KEY_PREFIX': 'dicom_review',
-        'VERSION': 1,
-    }
-}
-
-CACHE_MIDDLEWARE_SECONDS = 0
-
-# This is not necessary to set if the above `KEY_PREFIX` value is set since
-# the `KEY_PREFIX` namespaces all cache set by this application
-CACHE_MIDDLEWARE_KEY_PREFIX = 'dicom_review'
-
+#CACHES = {
+#    'default': {
+#        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+#        'LOCATION': 'unique',
+#        'KEY_PREFIX': 'dicom_review',
+#        'VERSION': 1,
+#    }
+#}
+#
+#CACHE_MIDDLEWARE_SECONDS = 0
+#
+## This is not necessary to set if the above `KEY_PREFIX` value is set since
+## the `KEY_PREFIX` namespaces all cache set by this application
+#CACHE_MIDDLEWARE_KEY_PREFIX = 'dicom_review'
+SOLO_CACHE = None
 
 #
 # SESSIONS AND COOKIES
