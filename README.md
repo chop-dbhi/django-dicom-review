@@ -69,7 +69,7 @@ prioritizers.register(custom_algorithm,"Name of Algorithm")
 
 Your custom prioritizer will now be available in the Admin for use.
 
-The `candidate_studies` parameter is a QuerySet of RadiologyStudy model represents. This model is declared in [here](https://github.com/cbmi/django-dicom-models/blob/master/dicom_models/staging/models.py#L69-L84) and inherits from this [model][https://github.com/cbmi/django-dicom-models/blob/master/dicom_models/core/models/data/radiology.py#L27-L33]
+The `candidate_studies` parameter is a QuerySet of RadiologyStudy model represents. This model is declared in [here](https://github.com/cbmi/django-dicom-models/blob/master/dicom_models/staging/models.py#L69-L84) and inherits from this [model](https://github.com/cbmi/django-dicom-models/blob/master/dicom_models/core/models/data/radiology.py#L27-L33)
 
 The `annotation_class` will be the django model defined [here](https://github.com/cbmi/django-dicom-models/blob/master/dicom_models/staging/models.py#L86-L94).
 
