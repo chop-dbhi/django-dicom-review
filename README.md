@@ -39,6 +39,8 @@ There are a couple of settings defined in global_settings.py that can be overrid
 3. MAX_REVIEWERS - Defines the maximum number of users that can review a single study before it is not shown to anyone anymore. See the Customization section below for details.
 4. MAX__STUDIES__PER__PAGE - The maximum number of studies to show a reviewer on a single page. Defaults to 10.
 5. WARN_UNVIEWED - Whether or not to warn the reviewer if the app detects they are reviewing a study that they have not yet viewed. Defaults to True.
+6. ALWAYS__SHOW__HIGH__RISK - For studies marked as High Risk, the app will display a column with a warning to the user. By default, if no studies on the page are high risk, the column will be omitted. Set this to True to override.
+
 
 # Customization
 
@@ -69,7 +71,7 @@ prioritizers.register(custom_algorithm,"Name of Algorithm")
 
 Your custom prioritizer will now be available in the Admin for use.
 
-The `candidate_studies` parameter is a QuerySet of RadiologyStudy model represents. This model is declared in [here](https://github.com/cbmi/django-dicom-models/blob/master/dicom_models/staging/models.py#L69-L84) and inherits from this [model](https://github.com/cbmi/django-dicom-models/blob/master/dicom_models/core/models/data/radiology.py#L27-L33)
+The `candidate_studies` parameter is a QuerySet of RadiologyStudy models. This model is declared in [here](https://github.com/cbmi/django-dicom-models/blob/master/dicom_models/staging/models.py#L69-L84) and inherits from this [model](https://github.com/cbmi/django-dicom-models/blob/master/dicom_models/core/models/data/radiology.py#L27-L33).
 
 The `annotation_class` will be the django model defined [here](https://github.com/cbmi/django-dicom-models/blob/master/dicom_models/staging/models.py#L86-L94).
 
