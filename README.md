@@ -29,7 +29,7 @@ Once the requirements are all installed, you should just be able to run
 
 and be up and running.
 
-Once installed you will have to add studies to the system. This can be done manually using the admin interface, but for convenience there will soon be a DataExpress script that will pull all the studies out of a DCME4CHEE schema and import them into the application.
+Once installed you will have to add studies to the system. This can be done manually using the admin interface, but for convenience there will soon be a [DataExpress](http://dataexpress.research.chop.edu/) script that will pull all the studies out of a [dcm4chee](http://www.dcm4che.org/confluence/display/ee2/Home) database schema and import them into the application.
 
 # Settings
 There are a couple of settings defined in global_settings.py that can be overridden
