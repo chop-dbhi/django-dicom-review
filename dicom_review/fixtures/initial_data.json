@@ -1,0 +1,9 @@
+[
+   {
+     "model": "dicom_review.config",
+     "pk": 1,
+     "fields": {
+         "default_prioritizer": "one per year"
+      }
+   }
+]

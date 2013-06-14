@@ -7,7 +7,7 @@
 # Core requirements
 django>=1.5
 git+http://github.com/cbmi/django-dicom-models.git
-
+git+https://github.com/lazybird/django-solo.git
 # Database Drivers, the Python stdlib has support for SQLite
 # psycopg2
 # cx_oracle

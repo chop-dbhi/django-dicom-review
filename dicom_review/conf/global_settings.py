@@ -25,6 +25,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'dicom_models.production',
     'dicom_models.staging',
+    'solo'
 )
 
 #
@@ -42,6 +43,8 @@ INTERNAL_IPS = ('127.0.0.1', '::1')
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+
+AUTH_USER_MODEL = 'dicom_review.Reviewer'
 
 #
 # DATABASES

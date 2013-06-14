@@ -1,8 +1,8 @@
 import json
 from dicom_models.staging.models import RadiologyStudy
 from dicom_models.staging.models import RadiologyStudyReview as StudyReview
+from models import Config
 from django.db import models
-from django.db.models import Count
 from django.db.models import Q
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
@@ -11,26 +11,20 @@ from django.template import RequestContext
 from django.forms import ModelForm
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
+from prioritizers import registry as prioritizers
 
 MAX_REVIEWERS = settings.MAX_REVIEWERS
+config = Config.objects.get(pk=1)
 
 # Default priority function
 # Takes allows 1 study per year in the range of years across all
 # studies in the database
-def one_per_year(candidate_studies):
-    years = candidate_studies.dates('study_date', 'year')
-    for period in years:
-       this_year = candidate_studies.values('id').annotate(num_reviews=Count("radiologystudyreview"))\
-           .filter(study_date__year=period.year, num_reviews__lt=MAX_REVIEWERS)\
-           .exclude(radiologystudyreview__user_id=request.user.id).order_by("?")[:1]
-       for study in this_year:
-         studies.append(study['id'])
-    return studies
 
 # Create the form class
 class ReviewForm(ModelForm):
     class Meta:
         model = StudyReview
+
 @login_required
 @never_cache
 def review(request):
@@ -49,7 +43,6 @@ def review(request):
 
 @login_required
 def studies_page(request, prev_saved):
-    studies = []
     # Here we determine studies that are eligible for review
     candidate_studies = RadiologyStudy.objects.filter(exclude=False, image_published=False, original_study_uid__isnull=False)
     # We must decide what method to use for choosing the reviews displayed to the user
@@ -62,7 +55,9 @@ def studies_page(request, prev_saved):
     # Check to see if the user object has an associated list object if so use that one
     # If not check to see if there is a global list object setup, if so use that one
     # Otherwise just pull from the candidate_studies
-    studies = one_per_year(candidate_studies)
+
+
+    studies = prioritizers.get(config.default_prioritizer)(candidate_studies, request.user)
     studies = RadiologyStudy.objects.filter(id__in=studies)[:settings.MAX_STUDIES_PER_PAGE]
 
     high_risk = False
