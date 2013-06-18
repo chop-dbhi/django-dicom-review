@@ -29,7 +29,22 @@ Once the requirements are all installed, you should just be able to run
 
 and be up and running.
 
-Once installed you will have to add studies to the system. This can be done manually using the admin interface, but for convenience there will soon be a [DataExpress](http://dataexpress.research.chop.edu/) script that will pull all the studies out of a [dcm4chee](http://www.dcm4che.org/confluence/display/ee2/Home) database schema and import them into the application.
+Once installed you will have to add studies to the system. This can be done manually using the admin interface, but for convenience there is a [DataExpress](http://dataexpress.research.chop.edu/) ETL script that will pull all the studies out of a [dcm4chee](http://www.dcm4che.org/confluence/display/ee2/Home) database [schema](http://www.dcm4che.org/confluence/download/attachments/496/pacstables_dcm4chee_216.jpg) and import them into the schema required by this application. See the section below for more details on the ETL script if you would like to use it.
+
+## ETL script
+
+The ETL script can be found in etl/import_studies.scala. The script is written using the [DataExpress](http://dataexpress.research.chop.edu/) framework. It reads the two property files (samples can be found in the conf directory), for a source and destination database. It will grab all of the studies from the `study` table in the source database and create a row for each study in the dicom_review database with sensible defaults. To run the script, follow these steps:
+
+
+1. Install Scala on your system
+2. Download the [DataExpress jar](https://github.com/downloads/cbmi/dataexpress/DataExpress-0.9.0-jar-with-dependencies.jar)
+3. Edit the conf/pacsdb.properties file so that points to your dcmchee database.
+4. Edit the conf/djangodb.properties file so that is points to the database this review application is running in.
+5. Run the following commands
+
+```
+scala -cp "/path/to/DataeDpress.jar" etl/import_studies.scala
+```
 
 # Settings
 There are a couple of settings defined in global_settings.py that can be overridden
@@ -48,7 +63,7 @@ The main customization point in this app is setting which studies the system wil
 
 ## Setting lists of studies to be reviewed
 
-First create a list of studies. This can be done in the Admin interface under `Study Lists`. Once a study list has been created you can set it as the default_study_list on the `App Configuration` object in the Admin or as the study_list on individual users in the system. You can create different study lists and set them on different users to divide up work. Then change the default prioritizer to `lists` on the App Configuration object (or just on a particular user, depending on your desired setup). Once this is done the system will pull studies from the specified list (if specified at the user level, than the user list, if not, the global list). If you set the prioritazation algorithm to `lists` but do not create and set any study lists, it will just pull from the database of eligible studies.
+First create a list of studies. This can be done in the Admin interface under `Study Lists`. Once a study list has been created you can set it as the default_study_list on the `App Configuration` object in the Admin or as the study_list on individual users in the system. You can create different study lists and set them on different users to divide up work. Then change the default prioritizer to `lists` on the App Configuration object (or just on a particular user, depending on your desired setup). Once this is done the system will pull studies from the specified list (if specified at the user level, than the user list, if not, the global list). If you set the prioritization algorithm to `lists` but do not create and set any study lists, it will just pull from the database of eligible studies.
 
 ## Writing your own prioritizer
 
