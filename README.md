@@ -49,12 +49,12 @@ scala -cp "/path/to/DataeDpress.jar" etl/import_studies.scala
 # Settings
 There are a couple of settings defined in global_settings.py that can be overridden
 
-1. DICOM__PROJECT__NAME - This is the name of the project you are anonymizing images for. It is just used within the template and is not important. Defaults to "project"
+1. DICOM\_PROJECT_NAME - This is the name of the project you are anonymizing images for. It is just used within the template and is not important. Defaults to "project"
 2. STUDYCENTRIC_LINK - To allow users to view the studies, this application links off to a [StudyCentric](https://github.com/cbmi/studycentric) instance. Place the url to your [StudyCentric](https://github.com/cbmi/studycentric) instance here.
 3. MAX_REVIEWERS - Defines the maximum number of users that can review a single study before it is not shown to anyone anymore. See the Customization section below for details.
-4. MAX__STUDIES__PER__PAGE - The maximum number of studies to show a reviewer on a single page. Defaults to 10.
+4. MAX\_STUDIES\_PER__PAGE - The maximum number of studies to show a reviewer on a single page. Defaults to 10.
 5. WARN_UNVIEWED - Whether or not to warn the reviewer if the app detects they are reviewing a study that they have not yet viewed. Defaults to True.
-6. ALWAYS__SHOW__HIGH__RISK - For studies marked as High Risk, the app will display a column with a warning to the user. By default, if no studies on the page are high risk, the column will be omitted. Set this to True to override.
+6. ALWAYS\_SHOW\_HIGH_RISK - For studies marked as High Risk, the app will display a column with a warning to the user. By default, if no studies on the page are high risk, the column will be omitted. Set this to True to override.
 
 
 # Customization
@@ -67,7 +67,7 @@ First create a list of studies. This can be done in the Admin interface under `S
 
 ## Writing your own prioritizer
 
-If you want to write a prioritizer yourself, this should be pretty simple. Create a file called
+If you want to write a prioritizer yourself create a file called
 `prioritizer.py` and place it in the root directory of the app. In the file, you create a function with the following signature
 
 
@@ -75,7 +75,7 @@ If you want to write a prioritizer yourself, this should be pretty simple. Creat
 def custom_algorithm(candidate_studies, user, annotation_class):
 ```
 
-The first parameter is a list of studies that are eligible for review. The second is the user currently reviewing studies, and the annotation_class is the is Django model that represents the review. Filter/order the candidate_studies in whatever way you would like and then return the modified queryset (or list).
+The first parameter is a django queryset of study objects that are eligible for review. The second is the user (django user object) currently reviewing studies, and the annotation_class is the is Django model that represents the review. Filter/order the candidate_studies in whatever way you would like and then return the modified queryset (or list).
 
 Then, at the bottom of the file, place the following code
 
