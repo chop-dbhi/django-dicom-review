@@ -43,7 +43,7 @@ The ETL script can be found in etl/import_studies.scala. The script is written u
 5. Run the following commands
 
 ```
-scala -cp "/path/to/DataeDpress.jar" etl/import_studies.scala
+scala -cp "/path/to/DataExpress.jar" etl/import_studies.scala
 ```
 
 # Settings
