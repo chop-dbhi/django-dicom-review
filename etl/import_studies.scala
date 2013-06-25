@@ -29,7 +29,7 @@ val append_table = s"""select original_study_uid, accession_no, study_date,
                       0 as image_published,
                       1 as requested,
                       0 as exclude from study_staging_import where original_study_uid not in
-                      (select original_study_uid from staging_radiologystudy) and accession_no not null"""
+                      (select original_study_uid from staging_radiologystudy) and accession_no is not null"""
 
 commit_on_success("target1") {
     copy query study_table from "source" to "target1" create "study_staging_import"
