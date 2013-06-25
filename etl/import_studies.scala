@@ -21,14 +21,28 @@ val time = target2Store match {
   }
   case _ => "now()"
 }
+val bool_false = target2Store match {
+  case s:SqlDb => s.backend match {
+    case sl:SqLiteBackend => "0"
+    case _ =>"FALSE"
+  }
+  case _ => "FALSE"
+}
+val bool_true = target2Store match {
+  case s:SqlDb => s.backend match {
+    case sl:SqLiteBackend => "1"
+    case _ =>"TRUE"
+  }
+  case _ => "TRUE"
+}
 
 val append_table = s"""select original_study_uid, accession_no, study_date,
                       $time as created,
                       $time as modified,
-                      0 as high_risk_flag,
-                      0 as image_published,
-                      1 as requested,
-                      0 as exclude from study_staging_import where original_study_uid not in
+                      $bool_false as high_risk_flag,
+                      $bool_false as image_published,
+                      $bool_true as requested,
+                      $bool_false as exclude from study_staging_import where original_study_uid not in
                       (select original_study_uid from staging_radiologystudy) and accession_no is not null"""
 
 commit_on_success("target1") {
