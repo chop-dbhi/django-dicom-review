@@ -37,4 +37,4 @@ def lists(candidate_studies, user, annotation_class = None):
 registry = loader.Registry(default=one_per_year, default_name = "one per year")
 registry.register(lists, name = "lists")
 
-loader.autodiscover('prioritizer')
+loader.autodiscover()
