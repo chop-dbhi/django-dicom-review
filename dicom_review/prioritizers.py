@@ -24,7 +24,7 @@ def one_per_year(candidate_studies, user, annotation_class = None):
 def lists(candidate_studies, user, annotation_class = None):
     from models import Config
 
-    study_list = user.study_list or Config.get_solo().default_study_list
+    study_list = (hasattr(user, 'study_list') and user.study_list) or Config.get_solo().default_study_list
     # if no lists are configured, just pass thru
     if not study_list:
         return candidate_studies
