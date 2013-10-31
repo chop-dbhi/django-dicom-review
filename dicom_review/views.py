@@ -51,7 +51,7 @@ def studies_page(request, prev_saved):
     # If it does we use that one.
     # Otherwise, there will be a site wide default algorithm, and by default this will be set to one_per_year
 
-    if reviewer.prioritizer:
+    if hasattr(reviewer, 'prioritizer') and reviewer.prioritizer:
         prioritizer_name = reviewer.prioritizer
     elif config.default_prioritizer:
         prioritizer_name = config.default_prioritizer
