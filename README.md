@@ -25,7 +25,7 @@ This will install all dependencies.
 
 Once the requirements are all installed, you should just be able to run
 
-`python manage.py syncdb`
+`python bin/manage.py syncdb`
 
 and be up and running.
 
